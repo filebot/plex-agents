@@ -38,11 +38,11 @@ def getxattr_plain_file(store, file, name):
 
 
 def movie_id(attr):
-  imdb_id = attr['imdbId']
+  imdb_id = attr.get('imdbId')
   if imdb_id > 0:
     return "tt%07d" % imdb_id
 
-  tmdb_id = attr['tmdbId']
+  tmdb_id = attr.get('tmdbId')
   if tmdb_id > 0:
     return str(tmdb_id)
 
@@ -50,11 +50,11 @@ def movie_id(attr):
 
 
 def movie_guid(attr):
-  imdb_id = attr['imdbId']
+  imdb_id = attr.get('imdbId')
   if imdb_id > 0:
     return "tt%07d" % imdb_id
 
-  tmdb_id = attr['tmdbId']
+  tmdb_id = attr.get('tmdbId')
   if tmdb_id > 0:
     return "com.plexapp.agents.themoviedb://%s?lang=%s" % (tmdb_id, movie_language(attr))
 

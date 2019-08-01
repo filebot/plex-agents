@@ -31,7 +31,7 @@ class XattrMovieAgent(Agent.Movies):
       return
 
     mid = movie_id(attr)
-    Log("[ID] %s" % mid)
+    Log("[MOVIE] %s" % mid)
 
     if mid is None:
       return
@@ -55,7 +55,7 @@ class XattrMovieAgent(Agent.Movies):
       return
 
     mid = movie_id(attr)
-    Log("[ID] %s" % mid)
+    Log("[MOVIE] %s" % mid)
 
     if mid is None:
       return
@@ -92,7 +92,7 @@ class XattrSeriesAgent(Agent.TV_Shows):
               continue
 
             sid = series_id(attr)
-            Log("[ID] %s" % sid)
+            Log("[SERIES] %s" % sid)
 
             if sid is None:
               continue
@@ -117,7 +117,7 @@ class XattrSeriesAgent(Agent.TV_Shows):
               return
 
             sid = series_id(attr)
-            Log("[ID] %s" % sid)
+            Log("[SERIES] %s" % sid)
 
             if sid is None:
               continue

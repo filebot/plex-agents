@@ -27,7 +27,7 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
 
 
 
-# python "FileBot Xattr Scanner.py" /path/to/files
+# python "FileBot Xattr Movie Scanner.py" /path/to/files
 if __name__ == "__main__":
   import os
 

@@ -21,22 +21,11 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
     )
     movie.guid = guid
 
+    original_filename = xattr_filename(file)
+    if original_filename:
+      movie.source = VideoFiles.RetrieveSource(original_filename)
+
     movie.parts.append(file)
     mediaList.append(movie)
 
-
-
-
-# python "FileBot Xattr Movie Scanner.py" /path/to/files
-if __name__ == "__main__":
-  import os
-
-  for arg in sys.argv:
-    for root, folders, files in os.walk(arg):
-      for name in files:
-        file = os.path.join(root, name)
-        attr = xattr_metadata(file)
-        if attr:
-          guid = movie_guid(attr)
-          if guid:
-            print "%s\t%s\t%s" % (guid, attr, file)
+    print("[XATTR] %s | %s | %s" % (movie, movie.guid, movie.source))

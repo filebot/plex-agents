@@ -1,22 +1,20 @@
-import json
+import xattr, json
 
 from os.path import *
 from datetime import *
-from xattr import *
 
 
 #####################################################################################################################
 
 
-def xattr_metadata(file):
+def getxattr(file, key):
   # try xattr
-  metadata = getxattr(file, 'net.filebot.metadata')
+  value = xattr.getxattr(file, key)
+  if value:
+    return value
 
   # try plain file xattr store
-  if metadata is None:
-    metadata = getxattr_plain_file('.xattr', file, 'net.filebot.metadata')
-
-  return json.loads(metadata) if metadata else None
+  return getxattr_plain_file('.xattr', file, key)
 
 
 def getxattr_plain_file(store, file, name):
@@ -32,6 +30,15 @@ def getxattr_plain_file(store, file, name):
   buffer = fd.read()
   fd.close()
   return buffer.decode('UTF-8')
+
+
+def xattr_metadata(file): 
+  value = getxattr(file, 'net.filebot.metadata')
+  return json.loads(value) if value else None
+
+
+def xattr_filename(file):
+  return getxattr(file, 'net.filebot.filename')
 
 
 #####################################################################################################################

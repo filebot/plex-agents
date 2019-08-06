@@ -35,24 +35,11 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
       if (episode_count > 1):
         episode.display_offset = (i * 100) / episode_count
 
+      original_filename = xattr_filename(file)
+      if original_filename:
+        episode.source = VideoFiles.RetrieveSource(original_filename)
+
       episode.parts.append(file)
       mediaList.append(episode)
 
-
-
-
-# python "FileBot Xattr Series Scanner.py" /path/to/files
-if __name__ == "__main__":
-  import os
-
-  for arg in sys.argv:
-    for root, folders, files in os.walk(arg):
-      for name in files:
-        file = os.path.join(root, name)
-        attr = xattr_metadata(file)
-        if attr:
-          episodes = list_episodes(attr)
-          for episode in episodes:
-            guid = series_guid(episode)
-            if guid:
-              print "%s\t%s\t%s" % (guid, episode, file)
+      print("[XATTR] %s | %s | %s | %s" % (episode, episode.year, episode.released_at, episode.source))

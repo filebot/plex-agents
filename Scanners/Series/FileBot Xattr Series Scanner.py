@@ -11,7 +11,10 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
     if attr is None:
       continue
 
+    # single episode | multi episode
     episodes = list_episodes(attr)
+    episode_count = len(episodes)
+
     for i, attr in enumerate(episodes):
       guid = series_guid(attr)
       if guid is None:
@@ -29,10 +32,9 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
       if date:
         episode.released_at = date.strftime('%Y-%m-%d')
 
-      if (len(episodes) > 1):
-        episode.display_offset = (i * 100) / len(episodes)
+      if (episode_count > 1):
+        episode.display_offset = (i * 100) / episode_count
 
-      print(episode)
       episode.parts.append(file)
       mediaList.append(episode)
 

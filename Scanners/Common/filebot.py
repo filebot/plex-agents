@@ -95,6 +95,11 @@ def series_guid(attr):
   return None
 
 
+def list_episodes(attr):
+  multi_episode_attrs = attr_get(attr, 'episodes')
+  return multi_episode_attrs if multi_episode_attrs else [attr]  # multi episode | single episode
+
+
 def series_name(attr): return attr_get(attr, 'seriesName')
 def series_year(attr): return attr_get(attr, 'seriesInfo', 'startDate', 'year')
 

@@ -72,6 +72,9 @@ def movie_name(attr):     return attr.get('name')
 def movie_year(attr):     return attr.get('year')
 def movie_language(attr): return attr.get('language')
 
+def movie_part_index(attr): return attr.get('partIndex')
+def movie_part_count(attr): return attr.get('partCount')
+
 
 #####################################################################################################################
 
@@ -103,8 +106,16 @@ def series_guid(attr):
 
 
 def list_episodes(attr):
-  multi_episode_attrs = attr_get(attr, 'episodes')
-  return multi_episode_attrs if multi_episode_attrs else [attr]  # multi episode | single episode
+  # check for single episode
+  if series_name(attr):
+    return [attr]
+
+  # check for multi episode
+  episodes = attr_get(attr, 'episodes')
+  if episodes:
+    return episodes
+
+  return []
 
 
 def series_name(attr): return attr_get(attr, 'seriesName')
@@ -122,6 +133,7 @@ def series_genres(attr):        return attr_get(attr, 'seriesInfo', 'genres')
 
 def episode_number(attr):          return attr.get('episode')
 def episode_season_number(attr):   return attr.get('season')
+def episode_special_number(attr):  return attr.get('special')
 def episode_title(attr):           return attr.get('title')
 def episode_absolute_number(attr): return attr.get('absolute')
 def episode_date(attr):            return attr_date(attr_get(attr, 'airdate'))

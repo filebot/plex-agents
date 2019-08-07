@@ -6,6 +6,9 @@ from filebot import *
 def Scan(path, files, mediaList, subdirs, language=None, root=None):
   VideoFiles.Scan(path, files, mediaList, subdirs, root)
 
+  # require alphabetic order
+  files.sort()
+
   # group movie parts as they come in in sequence
   prev_movie = None
   prev_part_index = None

@@ -41,13 +41,13 @@ elif os.name == 'posix':
 
 
   def fsencode(file):
-    return file.encode(sys.getfilesystemencoding())
+    return file.encode('utf-8')  # do not use sys.getfilesystemencoding() because it defaults to ascii on badly configured Linux machines
 
   def getxattr(file, name):
     buffer = create_string_buffer(8 * 1024)  # xattr size may be limited to 4 KB or less (e.g. ext4)
     n = getxattr_impl(file, name, buffer)
     if n > 0:
-      return buffer.raw[0:n].decode('UTF-8')
+      return buffer.raw[0:n].decode('utf-8')
     else:
       return None
 

@@ -16,7 +16,6 @@ if os.name == 'nt':
 # Unix / xattr
 elif os.name == 'posix':
   from ctypes import *
-  from ctypes.util import *
 
   # use current process to load library
   libc = CDLL(None)

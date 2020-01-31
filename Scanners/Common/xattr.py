@@ -8,7 +8,7 @@ if os.name == 'nt':
         fd = open("%s:%s" % (file, name), 'rb')
         buffer = fd.read()
         fd.close()
-        return buffer.decode('UTF-8')
+        return buffer.decode('utf-8')
       except:
         return None
 

@@ -29,7 +29,7 @@ def getxattr_plain_file(store, file, name):
   fd = open(xattr_file, "rb")
   buffer = fd.read()
   fd.close()
-  return buffer.decode('UTF-8')
+  return buffer.decode('utf-8')
 
 
 def xattr_metadata(file): 

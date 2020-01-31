@@ -31,7 +31,7 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
 
 
     movie = Media.Movie(
-      str(movie_name(attr)),  # use str() since Plex doesn't like unicode strings
+      movie_name(attr).encode('utf-8'),  # use str since Plex doesn't like unicode strings
       movie_year(attr)
     )
     movie.guid = guid

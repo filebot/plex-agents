@@ -9,7 +9,7 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
   # require alphabetic order
   files.sort()
 
-  # group movie parts as they come in in sequence
+  # group movie parts as they come in sequence
   prev_movie = None
   prev_part_index = None
 

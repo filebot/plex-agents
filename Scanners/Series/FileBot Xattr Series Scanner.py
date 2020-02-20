@@ -11,6 +11,8 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
     if attr is None:
       continue
 
+    print("[XATTR] %s" % attr)
+
     # single episode | multi episode
     episodes = list_episodes(attr)
     multi_episode_count = len(episodes)
@@ -18,7 +20,7 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
     for i, attr in enumerate(episodes):
       special = episode_special_number(attr)
 
-      episode = Media.Episode(
+      media = Media.Episode(
         series_name(attr).encode('utf-8'),              # use str since Plex doesn't like unicode strings
         0 if special else episode_season_number(attr),
         special if special else episode_number(attr),
@@ -28,16 +30,16 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
 
       date = episode_date(attr)
       if date:
-        episode.released_at = date.strftime('%Y-%m-%d')
+        media.released_at = date.strftime('%Y-%m-%d')
 
       if (multi_episode_count > 1):
-        episode.display_offset = (i * 100) / multi_episode_count
+        media.display_offset = (i * 100) / multi_episode_count
 
       original_filename = xattr_filename(file)
       if original_filename:
-        episode.source = VideoFiles.RetrieveSource(original_filename)
+        media.source = VideoFiles.RetrieveSource(original_filename.encode('utf-8'))
 
-      episode.parts.append(file)
-      mediaList.append(episode)
+      media.parts.append(file)
+      mediaList.append(media)
 
-      print("[XATTR] %s | %s | %s | %s | %s" % (episode, episode.year, episode.released_at, episode.source, attr))
+      print("[MEDIA] %s | %s | %s | %s" % (media, media.year, media.released_at, media.source))

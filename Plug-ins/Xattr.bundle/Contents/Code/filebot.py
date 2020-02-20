@@ -47,11 +47,11 @@ def xattr_filename(file):
 def movie_id(attr):
   imdb_id = attr.get('imdbId')
   if imdb_id > 0:
-    return "tt%07d" % imdb_id
+    return u"tt%07d" % imdb_id
 
   tmdb_id = attr.get('tmdbId')
   if tmdb_id > 0:
-    return str(tmdb_id)
+    return u"%01d" % tmdb_id
 
   return None
 
@@ -59,11 +59,11 @@ def movie_id(attr):
 def movie_guid(attr):
   imdb_id = attr.get('imdbId')
   if imdb_id > 0:
-    return "tt%07d" % imdb_id
+    return u"tt%07d" % imdb_id
 
   tmdb_id = attr.get('tmdbId')
   if tmdb_id > 0:
-    return "com.plexapp.agents.themoviedb://%s?lang=%s" % (tmdb_id, movie_language(attr))
+    return u"com.plexapp.agents.themoviedb://%s?lang=%s" % (tmdb_id, movie_language(attr))
 
   return None
 
@@ -83,7 +83,7 @@ def series_id(attr):
   series_id = attr_get(attr, 'seriesInfo', 'id')
   if series_id > 0:
     db = attr_get(attr, 'seriesInfo', 'database')
-    return "%s_%s" % (db, series_id)
+    return u"%s_%s" % (db, series_id)
 
   return None
 
@@ -94,13 +94,13 @@ def series_guid(attr):
     db = attr_get(attr, 'seriesInfo', 'database')
     lang = series_language(attr)
     if db == 'TheTVDB':
-      return "com.plexapp.agents.thetvdb://%s?lang=%s" % (series_id, lang)
+      return u"com.plexapp.agents.thetvdb://%s?lang=%s" % (series_id, lang)
     elif db == 'TheMovieDB::TV':
-      return "com.plexapp.agents.themoviedb://%s?lang=%s" % (series_id, lang)
+      return u"com.plexapp.agents.themoviedb://%s?lang=%s" % (series_id, lang)
     elif db == 'AniDB':
-      return "com.plexapp.agents.hama://%s?lang=%s" % (series_id, lang)
+      return u"com.plexapp.agents.hama://%s?lang=%s" % (series_id, lang)
     else:
-      return "%s://%s" % (db.lower(), series_id)
+      return u"%s://%s" % (db.lower(), series_id)
 
   return None
 

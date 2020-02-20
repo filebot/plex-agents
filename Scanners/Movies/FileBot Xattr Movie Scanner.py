@@ -10,7 +10,7 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
   files.sort()
 
   # group movie parts as they come in sequence
-  prev_movie = None
+  prev_media = None
   prev_part_index = None
 
   for file in files:
@@ -22,32 +22,33 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
     if guid is None:
       continue
 
+    print("[XATTR] %s | %s" % (guid, attr))
+
     part_index = movie_part_index(attr)
-    if prev_part_index and part_index and prev_part_index + 1 == part_index and prev_movie.guid == guid:
+    if prev_part_index and part_index and prev_part_index + 1 == part_index and prev_media.guid == guid:
       prev_part_index = part_index
-      prev_movie.parts.append(file)
-      print("[XATTR] %s | Part %s | %s" % (prev_movie, part_index, attr))
+      prev_media.parts.append(file)
+      print("[MEDIA] %s | Part %s" % (prev_media, part_index))
       continue
 
-
-    movie = Media.Movie(
+    media = Media.Movie(
       movie_name(attr).encode('utf-8'),  # use str since Plex doesn't like unicode strings
       movie_year(attr)
     )
-    movie.guid = guid
+    media.guid = guid.encode('utf-8')
 
     original_filename = xattr_filename(file)
     if original_filename:
-      movie.source = VideoFiles.RetrieveSource(original_filename)
+      media.source = VideoFiles.RetrieveSource(original_filename.encode('utf-8'))
 
-    movie.parts.append(file)
-    mediaList.append(movie)
+    media.parts.append(file)
+    mediaList.append(media)
 
     if part_index == 1:
-      prev_movie = movie
+      prev_media = media
       prev_part_index = 1
     else:
-      prev_movie = None
+      prev_media = None
       prev_part_index = None
 
-    print("[XATTR] %s | %s | %s | %s" % (movie, movie.guid, movie.source, attr))
+    print("[MEDIA] %s | %s | %s | %s" % (media, media.year, media.released_at, media.source))

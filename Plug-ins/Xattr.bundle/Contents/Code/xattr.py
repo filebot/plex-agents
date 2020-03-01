@@ -1,11 +1,11 @@
-import os, sys
+import io, os, sys
 
 
 # Windows / NTFS Alternative Streams
 if os.name == 'nt':
     def getxattr(file, name):
       try:
-        fd = open("%s:%s" % (file, name), 'rb')
+        fd = io.open("%s:%s" % (file, name), 'rb')
         buffer = fd.read()
         fd.close()
         return buffer.decode('utf-8')

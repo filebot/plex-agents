@@ -1,4 +1,4 @@
-import Media, VideoFiles
+import re, Media, VideoFiles
 
 from filebot import *
 
@@ -18,10 +18,17 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
     multi_episode_count = len(episodes)
 
     for i, attr in enumerate(episodes):
+      guid = series_guid(attr)
+      name = series_name(attr)
       special = episode_special_number(attr)
 
+      # use series id as series name value (only supported by TheTVDB agent)
+      m = re.search('com.plexapp.agents.thetvdb://([0-9]+)', guid)
+      if m:
+        name = u"%05d" % int(m.group(1))
+
       media = Media.Episode(
-        series_name(attr).encode('utf-8'),              # use str since Plex doesn't like unicode strings
+        name.encode('utf-8'),                           # use str since Plex doesn't like unicode strings
         0 if special else episode_season_number(attr),
         special if special else episode_number(attr),
         episode_title(attr).encode('utf-8'),            # use str since Plex doesn't like unicode strings

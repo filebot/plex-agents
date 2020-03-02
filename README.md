@@ -10,7 +10,13 @@ Enhance Plex with support for [FileBot Xattr Metadata](https://www.filebot.net/f
 3. Restart Plex
 4. Configure `Advanced ➔ Scanner` for each library and select `FileBot Xattr Scanner`
 5. Configure `Settings ➔ Agents` and enable `FileBot Xattr Metadata` and move it to the top for each primary agent
-
+```sh
+#!/bin/sh -xu
+curl -L -O https://github.com/filebot/plex-agents/archive/master.zip
+unzip -o master.zip
+cp -vru 'plex-agents-master/Plug-ins' '/path/to/PlexMediaServer/Library/Plex Media Server'
+cp -vru 'plex-agents-master/Scanners' '/path/to/PlexMediaServer/Library/Plex Media Server'
+```
 
 ## FileBot Xattr Metadata Scanner
 

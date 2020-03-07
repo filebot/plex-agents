@@ -21,18 +21,20 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
       guid = series_guid(attr)
       name = series_name(attr)
       special = episode_special_number(attr)
+      year = series_year(attr)
 
       # use series id as series name value (only supported by TheTVDB agent)
       m = re.search('com.plexapp.agents.thetvdb://([0-9]+)', guid)
       if m:
-        name = u"%05d" % int(m.group(1))
+        name = u"%05d" % int(m.group(1))                # TheTVDB IDs start at 70327
+        year = None
 
       media = Media.Episode(
         name.encode('utf-8'),                           # use str since Plex doesn't like unicode strings
         0 if special else episode_season_number(attr),
         special if special else episode_number(attr),
         episode_title(attr).encode('utf-8'),            # use str since Plex doesn't like unicode strings
-        series_year(attr)
+        year
       )
 
       date = episode_date(attr)

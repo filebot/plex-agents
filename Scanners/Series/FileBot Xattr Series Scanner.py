@@ -33,7 +33,7 @@ def Scan(path, files, mediaList, subdirs, language=None, root=None):
         name.encode('utf-8'),                           # use str since Plex doesn't like unicode strings
         0 if special else episode_season_number(attr),
         special if special else episode_number(attr),
-        episode_title(attr).encode('utf-8'),            # use str since Plex doesn't like unicode strings
+        None,
         year
       )
 

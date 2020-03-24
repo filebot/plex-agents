@@ -1,4 +1,4 @@
-import io, json, xattr
+import json, xattr
 
 from os.path import *
 from datetime import *
@@ -26,7 +26,7 @@ def getxattr_plain_file(store, file, name):
   if not isfile(xattr_file):
     return None
 
-  fd = io.open(xattr_file, "rb")
+  fd = open(xattr_file, "rb")
   buffer = fd.read()
   fd.close()
   return buffer.decode('utf-8')

@@ -2,6 +2,9 @@ import re, Media, VideoFiles
 
 from filebot import *
 
+VideoFiles.ignore_dirs.remove('bdmv')
+excl_dirs = ['backup', 'clipinf', 'playlist']
+VideoFiles.ignore_dirs.extend(excl_dirs)
 
 def Scan(path, files, mediaList, subdirs, language=None, root=None):
   VideoFiles.Scan(path, files, mediaList, subdirs, root)
